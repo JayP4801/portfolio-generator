@@ -15,12 +15,28 @@ const promptUser = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'What is your name?'
+            message: 'What is your name?',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else{
+                    console.log('Please enter your name!');
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
             name: 'github',
-            message: 'Enter your GitHub Username'
+            message: 'Enter your GitHub Username',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else{
+                    console.log('Please enter your GitHub Username!');
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
@@ -44,12 +60,28 @@ Add a New Project
         {
             type: 'input',
             name: 'name',
-            message: 'What is the name of your project?'
+            message: 'What is the name of your project?',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else{
+                    console.log('Please enter the name of your project!');
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
             name: 'description',
-            message: 'Provide a description of your project (Required)'
+            message: 'Provide a description of your project (Required)',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else{
+                    console.log('Please provide a description of your project!');
+                    return false;
+                }
+            }
         },
         {
             type: 'checkbox',
@@ -60,7 +92,15 @@ Add a New Project
         {
             type: 'input',
             name: 'link',
-            message: 'Enter your GitHub link to your project?'
+            message: 'Enter your GitHub link to your project?',
+            validate: nameInput => {
+                if (nameInput) {
+                    return true;
+                } else{
+                    console.log('Please enter a link to your project!');
+                    return false;
+                }
+            }
         },
         {
             type: 'confirm',
@@ -73,14 +113,20 @@ Add a New Project
             name: 'confirmAddProject',
             message: 'Would you like to enter another project?',
             default: false
-        },
-        .then(projectData => {
-            portfolioData.projects.push(projectData);
-        });
-    ]);
+        }
+    ])
+    .then(projectData => {
+        portfolioData.projects.push(projectData);
+        if (projectData.confirmAddProject){
+            return promptProject(portfolioData);
+        } else{
+            return portfolioData;
+        }
+    });
 };
 
 promptUser()
-    .then(answers => console.log(answers))
     .then(promptProject)
-    .then(projectAnswers => console.log(projectAnswers));
+    .then(portfolioData => {
+        console.log(portfolioData);
+    });
